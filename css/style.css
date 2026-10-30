@@ -1,0 +1,1054 @@
+/* =========================================================
+   style.css - Halaman Profil Daffa Alfany (Tugas 3)
+   Tema: Glassmorphism (kartu kaca buram) + Malam Berbintang
+
+   Daftar isi:
+   1. Warna tema (siang & malam)
+   2. Reset & pengaturan dasar
+   3. Latar dekorasi (gumpalan, bintang, bintang jatuh)
+   4. Navbar & tombol tema
+   5. Header & hero (Flexbox)
+   6. Layout konten (CSS Grid)
+   7. Kartu kaca & judul
+   8. Tabel
+   9. Keahlian & proyek
+   10. Galeri sertifikat
+   11. FAQ / accordion
+   12. Form & validasi
+   13. Footer (Flexbox)
+   14. Jejak kursor
+   15. Animasi (@keyframes)
+   16. Responsive (media queries)
+   ========================================================= */
+
+
+/* ---------- 1. Warna tema (siang & malam) ---------- */
+
+/* Warna disimpan dalam variabel (--nama) supaya saat class "gelap"
+   ditambah/dihapus oleh JavaScript, seluruh halaman ikut berganti.
+   body          = tema SIANG
+   body.gelap    = tema MALAM (aktif sejak awal) */
+body {
+    --latar: linear-gradient(135deg, #dff7f3 0%, #e6ebff 50%, #fbe6f2 100%);
+    --latar-solid: #ffffff;
+    --teks: #1f2937;
+    --teks-redup: #4b5563;
+    --judul: #14213d;
+    --aksen: #0f766e;
+    --aksen-2: #6d28d9;
+    --teks-tombol: #ffffff;
+    --kaca: rgba(255, 255, 255, 0.6);
+    --kaca-kuat: rgba(20, 33, 61, 0.05);
+    --kaca-nav: rgba(255, 255, 255, 0.65);
+    --garis-kaca: rgba(20, 33, 61, 0.12);
+    --garis-tabel: rgba(20, 33, 61, 0.12);
+    --bayangan: rgba(31, 41, 55, 0.12);
+    --galat: #be123c;
+    --warna-jejak: #14b8a6;
+    --opasitas-bintang: 0;
+}
+
+body.gelap {
+    --latar: linear-gradient(160deg, #0b1026 0%, #151a3d 50%, #24154a 100%);
+    --latar-solid: #151a3d;
+    --teks: #e8ecf8;
+    --teks-redup: #b6c0dc;
+    --judul: #ffffff;
+    --aksen: #5eead4;
+    --aksen-2: #a78bfa;
+    --teks-tombol: #0b1026;
+    --kaca: rgba(255, 255, 255, 0.07);
+    --kaca-kuat: rgba(255, 255, 255, 0.1);
+    --kaca-nav: rgba(11, 16, 38, 0.55);
+    --garis-kaca: rgba(255, 255, 255, 0.16);
+    --garis-tabel: rgba(255, 255, 255, 0.14);
+    --bayangan: rgba(0, 0, 0, 0.35);
+    --galat: #fb7185;
+    --warna-jejak: #5eead4;
+    --opasitas-bintang: 1;
+    color-scheme: dark;   /* kalender & dropdown bawaan browser ikut gelap */
+}
+
+
+/* ---------- 2. Reset & pengaturan dasar ---------- */
+
+/* Universal reset: padding & border dihitung di dalam lebar elemen */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Saat klik menu, halaman bergulir halus ke bagian tujuan */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--teks);
+    background-color: var(--latar-solid);
+    background-image: var(--latar);
+    background-attachment: fixed;
+    transition: color 0.4s;
+}
+
+/* Gambar tidak boleh melebihi lebar wadahnya (mencegah scroll horizontal) */
+img {
+    max-width: 100%;
+}
+
+a {
+    color: var(--aksen);
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--aksen-2);
+}
+
+
+/* ---------- 3. Latar dekorasi ---------- */
+
+/* Lapisan hiasan menempel di layar, di belakang semua konten */
+.latar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Gumpalan cahaya buram yang bergerak pelan */
+.gumpalan {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: melayang 18s ease-in-out infinite alternate;
+}
+
+.gumpalan-1 {
+    width: 420px;
+    height: 420px;
+    top: -80px;
+    left: -100px;
+    background-color: #14b8a6;
+}
+
+.gumpalan-2 {
+    width: 380px;
+    height: 380px;
+    top: 40%;
+    right: -120px;
+    background-color: #8b5cf6;
+    animation-duration: 22s;
+}
+
+.gumpalan-3 {
+    width: 320px;
+    height: 320px;
+    bottom: -100px;
+    left: 30%;
+    background-color: #3b82f6;
+    animation-duration: 26s;
+}
+
+/* Bintang kecil dibuat dari titik-titik radial-gradient yang diulang */
+.bintang-latar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
+        radial-gradient(1px 1px at 90px 120px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 160px 60px, #fde68a, transparent),
+        radial-gradient(1px 1px at 210px 190px, #ffffff, transparent),
+        radial-gradient(1px 1px at 60px 220px, #c4b5fd, transparent);
+    background-size: 250px 250px;
+    opacity: var(--opasitas-bintang);
+    animation: berkelip 4s ease-in-out infinite alternate;
+    transition: opacity 0.6s;
+}
+
+.bintang-latar.lapis-2 {
+    background-size: 380px 380px;
+    background-position: 120px 80px;
+    animation-duration: 6s;
+    animation-delay: 2s;
+}
+
+/* Bintang jatuh: garis bercahaya yang melesat miring */
+.bintang-jatuh {
+    position: absolute;
+    width: 140px;
+    height: 2px;
+    border-radius: 2px;
+    background-image: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0));
+    opacity: 0;
+    animation: melesat 9s linear infinite;
+}
+
+.jatuh-1 {
+    top: 10%;
+    left: 85%;
+}
+
+.jatuh-2 {
+    top: 22%;
+    left: 60%;
+    animation-delay: 3.5s;
+    animation-duration: 11s;
+}
+
+.jatuh-3 {
+    top: 4%;
+    left: 40%;
+    animation-delay: 6.5s;
+    animation-duration: 13s;
+}
+
+/* Di tema siang, bintang jatuh disembunyikan */
+body:not(.gelap) .bintang-jatuh {
+    display: none;
+}
+
+
+/* ---------- 4. Navbar & tombol tema ---------- */
+
+/* Navbar kaca: semi transparan + blur latar di belakangnya */
+.menu-utama {
+    background-color: var(--kaca-nav);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--garis-kaca);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Isi navbar boleh membungkus ke baris berikutnya bila ruang sempit */
+.menu-utama .container {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.menu-utama .navbar-nav {
+    flex-wrap: wrap;
+}
+
+.menu-utama .navbar-brand,
+.menu-utama .navbar-brand:hover {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--judul);
+}
+
+/* Selector dibuat 3 tingkat (.menu-utama .navbar-nav .nav-link) supaya
+   lebih kuat dari aturan bawaan Bootstrap ".navbar-dark .navbar-nav .nav-link"
+   yang membuat tulisan menu selalu putih (tidak terlihat di tema siang) */
+.menu-utama .navbar-nav .nav-link {
+    color: var(--teks-redup);
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* :hover = kursor di atas menu, :focus = dipilih lewat keyboard (Tab) */
+.menu-utama .navbar-nav .nav-link:hover,
+.menu-utama .navbar-nav .nav-link:focus {
+    color: var(--teks-tombol);
+    background-color: var(--aksen);
+}
+
+.tombol-tema {
+    margin-left: 12px;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--judul);
+    background-color: var(--kaca-kuat);
+    border: 1px solid var(--garis-kaca);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.tombol-tema:hover,
+.tombol-tema:focus {
+    background-color: var(--aksen);
+    color: var(--teks-tombol);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+
+/* ---------- 5. Header & hero (Flexbox) ---------- */
+
+.kepala {
+    padding-top: 64px;   /* memberi ruang untuk navbar yang menempel di atas */
+}
+
+/* Hero: foto dan teks disusun berdampingan dengan Flexbox */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 36px;
+    padding: 72px 0 64px;
+}
+
+/* Di desktop foto dipindah ke kanan (order), di mobile kembali ke atas */
+.hero-foto {
+    order: 2;
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+/* Cincin warna yang berputar di belakang foto */
+.hero-foto::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    background-image: conic-gradient(var(--aksen), var(--aksen-2), var(--aksen));
+    animation: putar 6s linear infinite;
+}
+
+.foto-profil {
+    position: relative;   /* agar foto berada di atas cincin */
+    display: block;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    object-position: center 35%;
+    border: 5px solid var(--latar-solid);
+    border-radius: 50%;
+}
+
+.hero-sapaan {
+    font-size: 1.1rem;
+    color: var(--aksen);
+    margin-bottom: 4px;
+}
+
+/* Nama dengan warna gradasi (teks diisi latar gradasi) */
+.hero-teks h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background-image: linear-gradient(90deg, var(--judul), var(--aksen), var(--aksen-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-peran {
+    font-size: 1.2rem;
+    color: var(--teks-redup);
+    margin-bottom: 24px;
+}
+
+.hero-tombol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-tombol .btn {
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-tombol .btn-light {
+    background-image: linear-gradient(135deg, var(--aksen), var(--aksen-2));
+    color: var(--teks-tombol);
+    border: none;
+}
+
+.hero-tombol .btn-outline-light {
+    background-color: var(--kaca);
+    color: var(--judul);
+    border: 1px solid var(--garis-kaca);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-tombol .btn:hover,
+.hero-tombol .btn:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--bayangan);
+}
+
+
+/* ---------- 6. Layout konten (CSS Grid) ---------- */
+
+.isi-halaman {
+    padding-bottom: 24px;
+}
+
+/* Baris berisi 2 kartu berdampingan */
+.baris-dua {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+/* Proyek lebih lebar (2 bagian), Sedang Dipelajari 1 bagian */
+.baris-proyek {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* FAQ dan Hubungi Saya sama lebar */
+.baris-kontak {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Kartu di dalam baris tidak perlu jarak bawah (sudah ada gap) */
+.baris-dua > .kartu {
+    margin-bottom: 0;
+    min-width: 0;   /* isi boleh menyempit, mencegah scroll horizontal */
+}
+
+
+/* ---------- 7. Kartu kaca & judul ---------- */
+
+.kartu {
+    background-color: var(--kaca);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--garis-kaca);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px var(--bayangan);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Kartu sedikit terangkat dan bercahaya saat disorot kursor */
+.kartu:hover {
+    transform: translateY(-4px);
+    border-color: var(--aksen);
+    box-shadow: 0 12px 40px var(--bayangan);
+}
+
+/* Agar judul section tidak tertutup navbar saat diklik dari menu */
+section {
+    scroll-margin-top: 80px;
+}
+
+.kartu h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--judul);
+    margin-bottom: 16px;
+}
+
+.kartu h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--aksen);
+    margin: 20px 0 12px;
+}
+
+.kartu p {
+    margin-bottom: 12px;
+}
+
+/* Reset di atas menghapus jarak list, jadi dikembalikan di sini */
+.kartu ul {
+    padding-left: 22px;
+    margin-bottom: 12px;
+}
+
+.kartu ul ul {
+    margin-bottom: 0;
+}
+
+#prodi {
+    font-weight: 700;
+    color: var(--aksen);
+}
+
+.kutipan {
+    color: var(--teks-redup);
+    border-top: 1px solid var(--garis-tabel);
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+
+/* ---------- 8. Tabel ---------- */
+
+.table {
+    color: var(--teks);
+    margin-bottom: 8px;
+}
+
+.table-bordered,
+.table-bordered th,
+.table-bordered td {
+    border-color: var(--garis-tabel);
+}
+
+.table-hover tr:hover {
+    color: var(--teks);
+    background-color: var(--kaca-kuat);
+}
+
+/* Judul kolom tabel pendidikan */
+.tabel-cv th {
+    background-color: var(--kaca-kuat);
+    color: var(--judul);
+}
+
+/* Baris judul yang digabung dengan colspan */
+.tabel-cv .judul-tabel {
+    background-image: linear-gradient(90deg, var(--aksen), var(--aksen-2));
+    color: var(--teks-tombol);
+    text-align: center;
+}
+
+/* Tabel data diri: judul baris di kolom kiri */
+#tabel-data-diri th {
+    width: 35%;
+    background-color: var(--kaca-kuat);
+    color: var(--judul);
+}
+
+
+/* ---------- 9. Keahlian & proyek ---------- */
+
+/* Hard Skill dan Soft Skill berdampingan kiri-kanan (Grid 2 kolom) */
+.grid-keahlian {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.kotak-keahlian,
+.proyek {
+    background-color: var(--kaca-kuat);
+    border: 1px solid var(--garis-kaca);
+    border-radius: 14px;
+    padding: 20px;
+    transition: border-color 0.3s;
+}
+
+.kotak-keahlian:hover,
+.proyek:hover {
+    border-color: var(--aksen-2);
+}
+
+.kotak-keahlian h3 {
+    margin-top: 0;
+}
+
+/* Judul proyek dan tahun sejajar kiri-kanan dengan Flexbox */
+.proyek-kepala {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.proyek-kepala h3 {
+    margin: 0;
+    color: var(--judul);
+}
+
+.proyek .badge-info {
+    background-image: linear-gradient(135deg, var(--aksen), var(--aksen-2));
+    color: var(--teks-tombol);
+    font-size: 0.85rem;
+    padding: 6px 10px;
+}
+
+
+/* ---------- 10. Galeri sertifikat ---------- */
+
+/* Gambar utama lebar (3 bagian), thumbnail di kanan (1 bagian) */
+.galeri {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 16px;
+}
+
+.galeri-utama img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.414;   /* perbandingan kertas A4 mendatar */
+    object-fit: contain;
+    background-color: var(--kaca-kuat);
+    border: 1px solid var(--garis-kaca);
+    border-radius: 14px;
+    transition: opacity 0.25s;
+}
+
+/* Class sementara saat gambar berganti (efek memudar) */
+.galeri-utama img.memudar {
+    opacity: 0;
+}
+
+.galeri-utama figcaption {
+    margin-top: 10px;
+    text-align: center;
+    color: var(--teks-redup);
+    font-size: 0.95rem;
+}
+
+.galeri-thumbnail {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.thumb {
+    padding: 0;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.414;
+    object-fit: cover;
+    object-position: center 30%;
+}
+
+.thumb:hover,
+.thumb:focus {
+    opacity: 1;
+    transform: scale(1.03);
+    outline: none;
+}
+
+/* Thumbnail yang sedang ditampilkan */
+.thumb.aktif {
+    opacity: 1;
+    border-color: var(--aksen);
+}
+
+
+/* ---------- 11. FAQ / accordion ---------- */
+
+.faq-item {
+    border-bottom: 1px solid var(--garis-tabel);
+}
+
+.faq-tanya {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    background: none;
+    border: none;
+    color: var(--judul);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.faq-tanya:hover,
+.faq-tanya:focus {
+    color: var(--aksen);
+    outline: none;
+}
+
+/* Ikon + berputar menjadi x saat jawaban terbuka */
+.faq-ikon {
+    flex-shrink: 0;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--aksen);
+    transition: transform 0.3s;
+}
+
+.faq-tanya.terbuka .faq-ikon {
+    transform: rotate(45deg);
+}
+
+.kartu .faq-jawab {
+    color: var(--teks-redup);
+    padding-bottom: 14px;
+    margin-bottom: 0;
+    animation: muncul 0.35s ease;
+}
+
+
+/* ---------- 12. Form & validasi ---------- */
+
+.label-grup {
+    margin-bottom: 6px;
+}
+
+.form-control {
+    background-color: var(--kaca-kuat);
+    border: 1px solid var(--garis-kaca);
+    border-radius: 10px;
+    color: var(--teks);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Kolom isian yang sedang aktif diberi garis aksen */
+.form-control:focus {
+    background-color: var(--kaca-kuat);
+    color: var(--teks);
+    border-color: var(--aksen);
+    box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.25);
+}
+
+.form-check-input {
+    accent-color: var(--aksen);
+}
+
+/* Pesan kesalahan di bawah isian (diisi oleh script.js) */
+.pesan-error {
+    display: block;
+    margin-top: 4px;
+    color: var(--galat);
+    font-size: 0.85rem;
+}
+
+/* Isian yang salah diberi garis merah (class ditambah oleh script.js) */
+.form-control.is-invalid {
+    border-color: var(--galat);
+}
+
+.tombol-kirim {
+    background-image: linear-gradient(135deg, var(--aksen), var(--aksen-2));
+    color: var(--teks-tombol);
+    padding: 10px 28px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tombol-kirim:hover,
+.tombol-kirim:focus {
+    color: var(--teks-tombol);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--bayangan);
+}
+
+/* Pesan berhasil setelah form lolos validasi */
+.kartu .notif {
+    margin-top: 16px;
+    margin-bottom: 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--aksen);
+    background-color: var(--kaca-kuat);
+    color: var(--judul);
+    animation: muncul 0.35s ease;
+}
+
+
+/* ---------- 13. Footer (Flexbox) ---------- */
+
+.kaki {
+    background-color: var(--kaca-nav);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--garis-kaca);
+    color: var(--teks-redup);
+    padding: 28px 0;
+}
+
+.kaki-dalam {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.kaki p {
+    margin: 0;
+}
+
+.medsos {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+}
+
+.kaki a {
+    color: var(--judul);
+    text-decoration: none;
+}
+
+.kaki a:hover,
+.kaki a:focus {
+    color: var(--aksen);
+}
+
+
+/* ---------- 14. Jejak kursor ---------- */
+
+/* Lapisan transparan di atas halaman; tidak menghalangi klik */
+#jejak-kursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+/* Titik-titik kecil yang menyambung menjadi garis seperti ekor komet */
+.titik-jejak {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background-color: var(--warna-jejak);
+    box-shadow: 0 0 10px 2px var(--warna-jejak);
+    animation: pudar-titik 0.6s linear forwards;
+}
+
+/* Bintang kecil yang terlempar lalu memudar */
+.bintang-jejak {
+    position: absolute;
+    line-height: 1;
+    text-shadow: 0 0 8px currentColor;
+    animation: terbang 1s ease-out forwards;
+}
+
+
+/* ---------- 15. Animasi (@keyframes) ---------- */
+
+@keyframes melayang {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+    to {
+        transform: translate(60px, 40px) scale(1.15);
+    }
+}
+
+@keyframes berkelip {
+    from {
+        opacity: calc(var(--opasitas-bintang) * 0.35);
+    }
+    to {
+        opacity: var(--opasitas-bintang);
+    }
+}
+
+@keyframes melesat {
+    0% {
+        transform: translate(0, 0) rotate(-35deg);
+        opacity: 0;
+    }
+    3% {
+        opacity: 1;
+    }
+    15% {
+        transform: translate(-620px, 435px) rotate(-35deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-620px, 435px) rotate(-35deg);
+        opacity: 0;
+    }
+}
+
+@keyframes putar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes muncul {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pudar-titik {
+    to {
+        opacity: 0;
+        transform: scale(0.2);
+    }
+}
+
+/* --geser-x dan --geser-y diisi acak oleh script.js untuk tiap bintang */
+@keyframes terbang {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    to {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--geser-x)), calc(-50% + var(--geser-y))) scale(0.3) rotate(180deg);
+    }
+}
+
+/* Bila pengguna mengaktifkan "kurangi gerakan" di sistem operasinya,
+   animasi dimatikan dan jejak kursor tidak ditampilkan */
+@media (prefers-reduced-motion: reduce) {
+    .gumpalan,
+    .bintang-latar,
+    .bintang-jatuh,
+    .hero-foto::before {
+        animation: none;
+    }
+
+    #jejak-kursor {
+        display: none;
+    }
+}
+
+
+/* ---------- 16. Responsive (media queries) ---------- */
+
+/* Tablet: ruang lebih sempit */
+@media (max-width: 991px) {
+
+    /* Menu panjang mulai membungkus, jadi navbar ikut ter-scroll
+       (tidak menempel) supaya tidak menutupi konten */
+    .menu-utama {
+        position: static;
+    }
+
+    .menu-utama .container {
+        justify-content: center;
+    }
+
+    .menu-utama .navbar-nav {
+        justify-content: center;
+        margin-left: 0 !important;   /* batalkan ml-auto */
+    }
+
+    .kepala {
+        padding-top: 0;
+    }
+
+    /* Baris 2 kolom menjadi 1 kolom */
+    .baris-proyek,
+    .baris-kontak {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-teks h1 {
+        font-size: 2.6rem;
+    }
+
+    .kartu {
+        padding: 22px;
+    }
+}
+
+/* Mobile: lebar layar di bawah 768px */
+@media (max-width: 767px) {
+
+    .tombol-tema {
+        margin-left: 0;
+    }
+
+    /* Hero: foto pindah ke atas teks, semua rata tengah */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+        padding: 40px 0 48px;
+    }
+
+    .hero-foto {
+        order: 0;
+    }
+
+    .foto-profil {
+        width: 140px;
+        height: 140px;
+    }
+
+    .hero-teks h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-peran {
+        font-size: 1rem;
+    }
+
+    .hero-tombol {
+        justify-content: center;
+    }
+
+    .kartu {
+        padding: 18px;
+    }
+
+    .kartu h2 {
+        font-size: 1.4rem;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    /* Galeri: thumbnail pindah ke bawah gambar utama, berjajar */
+    .galeri {
+        grid-template-columns: 1fr;
+    }
+
+    .galeri-thumbnail {
+        flex-direction: row;
+    }
+
+    .thumb {
+        flex: 1;
+    }
+
+    /* Judul proyek & tahun ditumpuk ke bawah */
+    .proyek-kepala {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Footer: semua isi ditumpuk dan rata tengah */
+    .kaki-dalam {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Ponsel kecil: Hard Skill dan Soft Skill ditumpuk */
+@media (max-width: 575px) {
+    .grid-keahlian {
+        grid-template-columns: 1fr;
+    }
+}

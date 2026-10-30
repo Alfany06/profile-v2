@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <!-- Tag viewport WAJIB untuk responsive: lebar halaman = lebar layar perangkat -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daffa Alfany - Profil Pribadi</title>
+
+    <!-- 1) Bootstrap 4.6.2 (offline, file ada di folder css/) -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 2) CSS eksternal buatan sendiri. Ditaruh SETELAH Bootstrap
+            supaya aturan di style.css bisa menimpa gaya bawaan Bootstrap -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<!-- class="gelap" = tema malam aktif sejak awal.
+     Tombol tema di navbar menambah/menghapus class ini (classList.toggle) -->
+<body class="gelap">
+
+    <!-- =========================================================
+         LATAR DEKORASI: gumpalan cahaya, bintang, dan bintang jatuh.
+         aria-hidden="true" = hanya hiasan, diabaikan pembaca layar
+         ========================================================= -->
+    <div class="latar" aria-hidden="true">
+        <span class="gumpalan gumpalan-1"></span>
+        <span class="gumpalan gumpalan-2"></span>
+        <span class="gumpalan gumpalan-3"></span>
+        <span class="bintang-latar"></span>
+        <span class="bintang-latar lapis-2"></span>
+        <span class="bintang-jatuh jatuh-1"></span>
+        <span class="bintang-jatuh jatuh-2"></span>
+        <span class="bintang-jatuh jatuh-3"></span>
+    </div>
+
+    <!-- Wadah jejak kursor: titik dan bintang dibuat oleh script.js -->
+    <div id="jejak-kursor" aria-hidden="true"></div>
+
+    <!-- =========================================================
+         HEADER: menu navigasi + hero (foto, nama, jabatan)
+         ========================================================= -->
+    <header id="atas" class="kepala">
+
+        <!-- Navbar Bootstrap: navbar-expand (tanpa akhiran) = menu selalu
+             tampil berjajar di semua ukuran layar, tanpa tombol burger -->
+        <nav id="menu" class="navbar navbar-expand navbar-dark fixed-top menu-utama">
+            <div class="container">
+                <a class="navbar-brand" href="#atas">Daffa Alfany</a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pendidikan">Pendidikan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#keahlian">Keahlian</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pengalaman">Proyek</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+                </ul>
+                <!-- FITUR 1: tombol Dark/Light Mode -->
+                <button type="button" id="tombol-tema" class="tombol-tema">
+                    <span class="ikon-tema">☀️</span> Mode Siang
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero: disusun dengan Flexbox (lihat .hero di style.css) -->
+        <div class="container">
+            <div class="hero">
+                <a href="images/foto-profil.jpg" class="hero-foto">
+                    <img src="images/foto-profil.jpg" alt="Foto profil Daffa Alfany"
+                         width="170" height="170" class="foto-profil">
+                </a>
+                <div class="hero-teks">
+                    <p class="hero-sapaan">Halo, saya</p>
+                    <h1>Daffa Alfany</h1>
+                    <p class="hero-peran">Mahasiswa Sistem Informasi | Calon Web Developer</p>
+                    <div class="hero-tombol">
+                        <a href="#kontak" class="btn btn-light">Hubungi Saya</a>
+                        <a href="#pengalaman" class="btn btn-outline-light">Lihat Proyek</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================
+         KONTEN UTAMA
+         Sebagian section lebar penuh, sebagian berpasangan 2 kolom
+         (.baris-dua = CSS Grid). Semua ikut ter-scroll.
+         ========================================================= -->
+    <div class="container">
+        <main class="isi-halaman">
+
+            <!-- ---------- Tentang Saya (lebar penuh) ---------- -->
+            <section id="tentang" class="kartu">
+                <h2>Tentang Saya</h2>
+                <p>
+                    Haii!!<br>
+                    Saya mahasiswa <span id="prodi">Sistem Informasi</span>
+                    semester 3 yang tertarik pada pengembangan web dan pengolahan
+                    data. Saya senang mempelajari teknologi baru, terbiasa bekerja
+                    secara terstruktur, dan saat ini sedang mendalami dasar-dasar
+                    pemrograman web.
+                </p>
+                <p>
+                    Tujuan saya adalah menjadi pengembang sistem informasi yang
+                    mampu membuat aplikasi web yang bermanfaat bagi banyak orang.
+                </p>
+
+                <h3>Data Diri</h3>
+                <!-- .table-responsive: tabel boleh digeser di dalam kotaknya,
+                     halaman tidak ikut melebar di layar kecil -->
+                <div class="table-responsive">
+                    <table id="tabel-data-diri" class="table table-bordered">
+                        <tr>
+                            <th>Nama</th>
+                            <td>Daffa Alfany</td>
+                        </tr>
+                        <tr>
+                            <th>NIM</th>
+                            <td>A12.2025.07368</td>
+                        </tr>
+                        <tr>
+                            <th>Program Studi</th>
+                            <td>Sistem Informasi S1</td>
+                        </tr>
+                        <tr>
+                            <th>Semester</th>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <th>Domisili</th>
+                            <td>Kudus</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><a href="mailto:alfanypa06@gmail.com">alfanypa06@gmail.com</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ---------- Riwayat Pendidikan (lebar penuh) ---------- -->
+            <section id="pendidikan" class="kartu">
+                <h2>Riwayat Pendidikan</h2>
+
+                <h3>Pendidikan Formal</h3>
+                <div class="table-responsive">
+                    <table id="tabel-pendidikan" class="table table-bordered table-hover tabel-cv">
+                        <tr>
+                            <th colspan="3" class="judul-tabel">Riwayat Pendidikan Formal</th>
+                        </tr>
+                        <tr>
+                            <th>Jenjang</th>
+                            <th>Nama Institusi</th>
+                            <th>Tahun</th>
+                        </tr>
+                        <tr>
+                            <td>SD</td>
+                            <td>SD Negeri 1 Kalirejo</td>
+                            <td>2012 - 2018</td>
+                        </tr>
+                        <tr>
+                            <td>SMP</td>
+                            <td>SMP Negeri 1 Undaan</td>
+                            <td>2018 - 2021</td>
+                        </tr>
+                        <tr>
+                            <td>SMA</td>
+                            <td>SMA NU Al Ma'ruf</td>
+                            <td>2021 - 2024</td>
+                        </tr>
+                        <tr>
+                            <td>S1 Sistem Informasi</td>
+                            <td>Universitas Dian Nuswantoro</td>
+                            <td>2025 - Sekarang</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Pendidikan Non-Formal / Pelatihan</h3>
+                <div class="table-responsive">
+                    <table id="tabel-pelatihan" class="table table-bordered table-hover tabel-cv">
+                        <tr>
+                            <th>Penyelenggara</th>
+                            <th>Nama Pelatihan</th>
+                            <th>Tahun</th>
+                        </tr>
+                        <tr>
+                            <td>DNCC</td>
+                            <td>Bootcamp Desain UI/UX</td>
+                            <td>2025</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ---------- Keahlian (Hard | Soft = Grid 2 kolom) ---------- -->
+            <section id="keahlian" class="kartu">
+                <h2>Keahlian</h2>
+                <div class="grid-keahlian">
+                    <div class="kotak-keahlian">
+                        <h3>Hard Skill</h3>
+                        <ul>
+                            <li>Pemrograman Web
+                                <ul>
+                                    <li>HTML5</li>
+                                    <li>CSS (sedang dipelajari)</li>
+                                    <li>JavaScript (sedang dipelajari)</li>
+                                </ul>
+                            </li>
+                            <li>Basis Data
+                                <ul>
+                                    <li>SQL dasar</li>
+                                    <li>Perancangan ERD</li>
+                                </ul>
+                            </li>
+                            <li>Git &amp; GitHub</li>
+                            <li>Microsoft Office (Word, Excel, PowerPoint)</li>
+                        </ul>
+                    </div>
+                    <div class="kotak-keahlian">
+                        <h3>Soft Skill</h3>
+                        <ul>
+                            <li>Kerja sama tim</li>
+                            <li>Komunikasi</li>
+                            <li>Manajemen waktu</li>
+                            <li>Pemecahan masalah</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- Proyek | Sedang Dipelajari (2 kolom) ---------- -->
+            <div class="baris-dua baris-proyek">
+                <section id="pengalaman" class="kartu">
+                    <h2>Proyek</h2>
+
+                    <article class="proyek">
+                        <div class="proyek-kepala">
+                            <h3>Proyek: Halaman Profil Pribadi</h3>
+                            <span class="badge badge-info">2026</span>
+                        </div>
+                        <p>
+                            Membuat halaman profil pribadi statis menggunakan HTML5
+                            semantik sebagai tugas mata kuliah Pemrograman Web.
+                        </p>
+                        <ul>
+                            <li>Menerapkan elemen semantik header, nav, main, section, article, aside, dan footer</li>
+                            <li>Mengelola kode menggunakan Git dan GitHub</li>
+                            <li>Mempublikasikan halaman melalui GitHub Pages</li>
+                        </ul>
+                    </article>
+                </section>
+
+                <aside id="info-tambahan" class="kartu">
+                    <h2>Sedang Dipelajari</h2>
+                    <ul>
+                        <li>Mata kuliah Pemrograman Web</li>
+                        <li>Mata kuliah Basis Data</li>
+                    </ul>
+                    <p class="kutipan"><em>"Belajar sedikit setiap hari lebih baik daripada tidak sama sekali."</em></p>
+                </aside>
+            </div>
+
+            <!-- ---------- FITUR 2: Galeri Sertifikat (lebar penuh) ---------- -->
+            <section id="galeri" class="kartu">
+                <h2>Galeri Sertifikat</h2>
+                <p>Klik gambar kecil untuk menampilkannya di bingkai utama.</p>
+
+                <div class="galeri">
+                    <figure class="galeri-utama">
+                        <img id="gambar-utama" src="images/sertifikat-pelatihan.png"
+                             alt="Sertifikat Bootcamp Desain UI/UX - DNCC (2025)">
+                        <figcaption id="keterangan-gambar">Sertifikat Bootcamp Desain UI/UX - DNCC (2025)</figcaption>
+                    </figure>
+
+                    <!-- Thumbnail: alt pada tiap gambar dipakai juga sebagai keterangan -->
+                    <div class="galeri-thumbnail">
+                        <button type="button" class="thumb aktif">
+                            <img src="images/sertifikat-pelatihan.png"
+                                 alt="Sertifikat Bootcamp Desain UI/UX - DNCC (2025)">
+                        </button>
+                        <button type="button" class="thumb">
+                            <img src="images/sertifikat-seminar.jpg"
+                                 alt="Sertifikat Seminar - Nama Seminar (Tahun)">
+                        </button>
+                        <button type="button" class="thumb">
+                            <img src="images/foto-profil.jpg"
+                                 alt="Foto profil Daffa Alfany">
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- FAQ | Hubungi Saya (2 kolom) ---------- -->
+            <div class="baris-dua baris-kontak">
+
+                <!-- FITUR 3: Accordion / FAQ -->
+                <section id="faq" class="kartu">
+                    <h2>FAQ</h2>
+                    <p>Klik pertanyaan untuk melihat jawabannya.</p>
+
+                    <div class="faq-item">
+                        <button type="button" class="faq-tanya" aria-expanded="false">
+                            Kenapa memilih jurusan Sistem Informasi?
+                            <span class="faq-ikon">+</span>
+                        </button>
+                        <p class="faq-jawab" hidden>
+                            Saya tertarik pada teknologi sekaligus cara teknologi membantu
+                            menyelesaikan masalah nyata, misalnya di bisnis dan organisasi.
+                            Sistem Informasi menggabungkan keduanya: belajar pemrograman,
+                            basis data, dan cara merancang sistem yang berguna bagi pengguna.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-tanya" aria-expanded="false">
+                            Bidang apa yang paling ingin kamu dalami?
+                            <span class="faq-ikon">+</span>
+                        </button>
+                        <p class="faq-jawab" hidden>
+                            Pengembangan web. Saat ini saya sedang belajar HTML, CSS, dan
+                            JavaScript, lalu ingin lanjut ke PHP dan MySQL supaya bisa
+                            membuat aplikasi web yang lengkap.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-tanya" aria-expanded="false">
+                            Pengalaman apa yang sudah kamu miliki di bidang desain?
+                            <span class="faq-ikon">+</span>
+                        </button>
+                        <p class="faq-jawab" hidden>
+                            Saya pernah mengikuti Bootcamp Desain UI/UX yang diadakan DNCC
+                            pada tahun 2025. Dari sana saya belajar dasar-dasar merancang
+                            tampilan yang nyaman digunakan.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-tanya" aria-expanded="false">
+                            Bagaimana halaman profil ini dibuat?
+                            <span class="faq-ikon">+</span>
+                        </button>
+                        <p class="faq-jawab" hidden>
+                            Halaman ini dibuat dengan HTML5 semantik, CSS (Flexbox, Grid,
+                            dan Bootstrap 4) untuk tampilan responsif, serta JavaScript
+                            untuk fitur interaktif seperti mode gelap, galeri, FAQ, dan
+                            validasi form. Kodenya dikelola dengan Git dan dipublikasikan
+                            melalui GitHub Pages.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-tanya" aria-expanded="false">
+                            Bagaimana cara menghubungi saya?
+                            <span class="faq-ikon">+</span>
+                        </button>
+                        <p class="faq-jawab" hidden>
+                            Melalui form di bagian "Hubungi Saya", email
+                            alfanypa06@gmail.com, atau media sosial yang tercantum di
+                            bagian bawah halaman.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- FITUR 4: Validasi Form -->
+                <section id="kontak" class="kartu">
+                    <h2>Hubungi Saya</h2>
+                    <p>Silakan isi form di bawah ini untuk menghubungi saya.</p>
+
+                    <!-- novalidate: pengecekan bawaan browser dimatikan,
+                         karena pengecekan dilakukan oleh script.js -->
+                    <form id="form-kontak" action="#" method="get" novalidate>
+                        <!-- .form-row + .col-md-6: Nama & Email berdampingan di layar lebar -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fnama">Nama :</label>
+                                <input type="text" id="fnama" name="fnama" class="form-control">
+                                <small id="error-nama" class="pesan-error"></small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="femail">Email :</label>
+                                <input type="email" id="femail" name="femail" class="form-control">
+                                <small id="error-email" class="pesan-error"></small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="label-grup">Keperluan :</p>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="fkeperluan1" name="fkeperluan" value="proyek" class="form-check-input">
+                                <label for="fkeperluan1" class="form-check-label">Kerja sama proyek</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="fkeperluan2" name="fkeperluan" value="tanya" class="form-check-input">
+                                <label for="fkeperluan2" class="form-check-label">Bertanya</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="fkeperluan3" name="fkeperluan" value="lainnya" class="form-check-input">
+                                <label for="fkeperluan3" class="form-check-label">Lainnya</label>
+                            </div>
+                            <small id="error-keperluan" class="pesan-error"></small>
+                        </div>
+                        <div class="form-group">
+                            <p class="label-grup">Topik yang diminati :</p>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="ftopik1" name="ftopik1" value="web" class="form-check-input">
+                                <label for="ftopik1" class="form-check-label">Pemrograman Web</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="ftopik2" name="ftopik2" value="data" class="form-check-input">
+                                <label for="ftopik2" class="form-check-label">Basis Data</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="ftopik3" name="ftopik3" value="desain" class="form-check-input">
+                                <label for="ftopik3" class="form-check-label">Desain UI/UX</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fasal">Asal :</label>
+                                <select id="fasal" name="fasal" class="form-control">
+                                    <option value="mahasiswa">Mahasiswa</option>
+                                    <option value="dosen">Dosen</option>
+                                    <option value="umum">Umum</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="ftanggal">Tanggal janji temu :</label>
+                                <input type="date" id="ftanggal" name="ftanggal" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fpesan">Pesan :</label>
+                            <textarea id="fpesan" name="fpesan" rows="5" class="form-control"></textarea>
+                            <small id="error-pesan" class="pesan-error"></small>
+                        </div>
+                        <div>
+                            <input type="submit" value="Kirim Pesan" class="btn tombol-kirim">
+                        </div>
+                        <!-- Tempat pesan berhasil, diisi oleh script.js -->
+                        <p id="pesan-form" class="notif" hidden></p>
+                    </form>
+                </section>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- =========================================================
+         FOOTER: media sosial + hak cipta (disusun dengan Flexbox)
+         ========================================================= -->
+    <footer class="kaki">
+        <div class="container kaki-dalam">
+            <p>&copy; 2026 Daffa Alfany. Semua hak cipta dilindungi.</p>
+            <ul class="medsos">
+                <li><a href="https://github.com/Alfany06">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/daffa-alfany-26b480376/">LinkedIn</a></li>
+                <li><a href="https://www.instagram.com/pa_daffany19">Instagram</a></li>
+            </ul>
+            <p><a href="#atas">Kembali ke atas &uarr;</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript eksternal: diletakkan sebelum </body>
+         supaya semua elemen HTML sudah ada saat script dijalankan -->
+    <script src="js/script.js"></script>
+</body>
+</html>
